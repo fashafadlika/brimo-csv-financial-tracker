@@ -12,7 +12,7 @@ Script ini membaca riwayat transaksi, merangkum pemasukan dan pengeluaran harian
 - Kode Python bersih dan mudah dimengerti untuk pemula
 
 **Cara Pakai:**
-1. Pastikan Python dan `pandas` terinstall
+1. Pastikan Python, `pandas`, `matplotlib` terinstall
 2. Letakkan script `.py` di folder yang sama dengan CSV dummy
 3. Jalankan script:
    ```bash
@@ -37,7 +37,7 @@ This script reads your transaction history, summarizes daily income and expenses
 - Clean Python code, easy for beginners
 
 **How to Use:**
-1. Make sure Python and `pandas` are installed
+1. Make sure Python, `pandas`, `matplotlib` are installed
 2. Place the `.py` script in the same folder as the dummy CSV
 3. Run the script:
    ```bash
