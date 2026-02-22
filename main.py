@@ -1,53 +1,59 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 #baca csv (masukan file csv)
-data = pd.read_csv(" ")
+def load_data(file_path):
+    data = pd.read_csv(file_path)
 
-#ambil kolom penting
-data = data[
-    [
-        "TGL_TRAN",
-        "DESK_TRAN",
-        "MUTASI_DEBET",
-        "MUTASI_KREDIT",
-        "SALDO_AKHIR_MUTASI"
-    ]
-]
+    #konversi tipe data
+    data["MUTASI_DEBET"] = pd.to_numeric(data["MUTASI_DEBET"], errors="coerce")
+    data["MUTASI_KREDIT"] = pd.to_numeric(data["MUTASI_KREDIT"], errors="coerce")
+    data["TGL_TRAN"] = pd.to_datetime(data["TGL_TRAN"])
 
-#konversi tipe data
-data["MUTASI_DEBET"] = pd.to_numeric(data["MUTASI_DEBET"], errors="coerce")
-data["MUTASI_KREDIT"] = pd.to_numeric(data["MUTASI_KREDIT"], errors="coerce")
-data["TGL_TRAN"] = pd.to_datetime(data["TGL_TRAN"])
+    return data
 
-#cashflow per hari
-cashflow_harian = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
-cashflow_harian["CASHFLOW"] = (
-    cashflow_harian["MUTASI_KREDIT"] - cashflow_harian["MUTASI_DEBET"]
-)
+def hitung_cashflow_perhari(data):
+    #grouping tanggal, kredit, debet
+    perhari = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
+    perhari["CASHFLOW"] = (perhari["MUTASI_KREDIT"] - perhari["MUTASI_DEBET"])
 
-#pemasukan terbesar
-hari_pemasukan_terbesar = cashflow_harian["MUTASI_KREDIT"].idxmax()
-pemasukan_terbesar = cashflow_harian["MUTASI_KREDIT"].max()
+    return perhari
 
-#pengeluaran terbesar
-hari_terboros = cashflow_harian["MUTASI_DEBET"].idxmax()
-pengeluaran_terbesar = cashflow_harian["MUTASI_DEBET"].max()
+def hitung_ringkasan(data):
+    total_masuk = int(data["MUTASI_KREDIT"].sum())
+    total_keluar = int(data["MUTASI_DEBET"].sum())
+    selisih = total_masuk - total_keluar
 
-#penjumlahan uang keluar dan masuk
-total_masuk = int(data["MUTASI_KREDIT"].sum())
-total_keluar = int(data["MUTASI_DEBET"].sum())
-selisih_masuk_keluar = total_masuk - total_keluar
+    return total_masuk, total_keluar, selisih
 
-#tampilkan hasil akhir
-print(cashflow_harian)
-print(f"Total Pemasukan: Rp. {total_masuk:,}")
-print(f"Total Pengeluaran: Rp. {total_keluar:,}")
-print(f"Cashflow Bersih: Rp. {selisih_masuk_keluar:,}")
-print(f"Hari Pemasukan Terbesar: {hari_pemasukan_terbesar} (Rp. {int(pemasukan_terbesar):,})")
-print(f"Hari Pengeluaran Terbesar: {hari_terboros} (Rp. {int(pengeluaran_terbesar):,})")
+def plot_pengeluaran(perhari, total_masuk, total_keluar, selisih):
+    #grafik
+    plt.plot(perhari.index, perhari["MUTASI_DEBET"])
+    plt.title("Financial Tracker")
+    plt.xlabel("Tanggal")
+    plt.ylabel("Uang Keluar")
+    plt.xticks(rotation = 45)
 
-#ambil 5 data pertama
-#print(data.head())
+    total_masuk_keluar = (
+        f"Total Masuk: Rp. {total_masuk:,}\n"
+        f"Total Keluar: Rp. {total_keluar:,}\n"
+        f"Selisih: Rp. {selisih}"
+    )
 
-#menampilkan nama kolom
-#print(data.columns)
+    plt.text(
+        0.02, 0.95,
+        total_masuk_keluar,
+        transform=plt.gca().transAxes,
+        verticalalignment="top"
+    )
+    
+    plt.tight_layout()
+
+    plt.show()
+
+# Main Program
+data = load_data("desember2025.csv")
+cashflow_perhari = hitung_cashflow_perhari(data)
+total_masuk, total_keluar, selisih = hitung_ringkasan(data)
+plot_pengeluaran(cashflow_perhari, total_masuk, total_keluar, selisih)
+
