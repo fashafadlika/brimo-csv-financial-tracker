@@ -26,12 +26,17 @@ def hitung_ringkasan(data):
 
     return total_masuk, total_keluar, selisih
 
-def plot_pengeluaran(perhari, total_masuk, total_keluar, selisih):
-    #grafik
+def plot_pengeluaran_pemasukan(perhari, total_masuk, total_keluar, selisih):
+    #Subplot 1: Pengeluaran
+    plt.subplot(2, 1, 1)
     plt.plot(perhari.index, perhari["MUTASI_DEBET"])
-    plt.title("Financial Tracker")
-    plt.xlabel("Tanggal")
-    plt.ylabel("Uang Keluar")
+    plt.title("Pengeluaran per Hari")
+    plt.xticks(rotation = 45)
+
+    #Subplot 2: Pemasukan
+    plt.subplot(2, 1, 2)
+    plt.plot(perhari.index, perhari["MUTASI_KREDIT"])
+    plt.title("Pemasukan per Hari")
     plt.xticks(rotation = 45)
 
     total_masuk_keluar = (
@@ -48,12 +53,11 @@ def plot_pengeluaran(perhari, total_masuk, total_keluar, selisih):
     )
     
     plt.tight_layout()
-
     plt.show()
 
 # Main Program
 data = load_data("desember2025.csv")
 cashflow_perhari = hitung_cashflow_perhari(data)
 total_masuk, total_keluar, selisih = hitung_ringkasan(data)
-plot_pengeluaran(cashflow_perhari, total_masuk, total_keluar, selisih)
+plot_pengeluaran_pemasukan(cashflow_perhari, total_masuk, total_keluar, selisih)
 
