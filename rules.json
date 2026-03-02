@@ -1,0 +1,7 @@
+{
+    "Belanja Online": ["TOKOPEDIA", "SHOPEE"],
+    "E-Wallet": ["TOP UP", "DANA", "OVO", "GOPAY"],
+    "Biaya Bank": ["ADMIN", "FEE"],
+    "QRIS": ["QRIS"],
+    "Transfer": ["TTMI"]
+}
