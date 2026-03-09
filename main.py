@@ -87,13 +87,16 @@ def plot_pengeluaran_pemasukan(perhari, total_masuk, total_keluar, selisih):
     plt.tight_layout()
     plt.show()
 
-# Main Program
-data = load_data("desember2025.csv")
-rules = load_rules("rules.json")
-data = proses_data(data, rules)
-cashflow_perhari = hitung_cashflow_perhari(data)
-total_masuk, total_keluar, selisih = hitung_ringkasan(data)
-plot_pengeluaran_pemasukan(cashflow_perhari, total_masuk, total_keluar, selisih)
+def main():
+    data = load_data("desember2025.csv")
+    rules = load_rules("rules.json")
+    data = proses_data(data, rules)
+    cashflow_perhari = hitung_cashflow_perhari(data)
+    total_masuk, total_keluar, selisih = hitung_ringkasan(data)
+    plot_pengeluaran_pemasukan(cashflow_perhari, total_masuk, total_keluar, selisih)
 
+# Main Program
+if __name__ == "__main__":
+    main()
 
 
