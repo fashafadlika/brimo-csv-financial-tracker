@@ -1,50 +1,95 @@
-# BRImo CSV Financial Tracker
+# Financial Tracker
 
-## Deskripsi (Bahasa Indonesia)
-Alat sederhana berbasis Python untuk melacak cashflow harian dari CSV mutasi BRImo.  
-Script ini membaca riwayat transaksi, merangkum pemasukan dan pengeluaran harian, menghitung cashflow bersih, serta menampilkan hari dengan pemasukan dan pengeluaran terbesar.
-
-**Fitur:**
-- Membaca CSV mutasi BRImo
-- Ringkasan cashflow per hari
-- Menampilkan total pemasukan, pengeluaran, dan cashflow bersih
-- Menunjukkan hari dengan pemasukan dan pengeluaran terbesar
-- Kode Python bersih dan mudah dimengerti untuk pemula
-
-**Cara Pakai:**
-1. Pastikan Python, `pandas`, `matplotlib` terinstall
-2. Letakkan script `.py` di folder yang sama dengan CSV dummy
-3. Jalankan script:
-   ```bash
-   python nama_script.py
-   ```
-4. Hasil ringkasan akan muncul di terminal
-
-**Catatan:**  
-Jangan upload CSV asli yang berisi data rekening nyata ke repo publik. Gunakan CSV dummy dengan struktur kolom sama untuk demo.
+Aplikasi dashboard sederhana untuk melacak arus kas keuangan pribadi berdasarkan mutasi rekening BRI. Dibangun menggunakan Python dan Streamlit.
 
 ---
 
-## Description (English)
-A simple Python tool to track daily cashflow from BRImo CSV exports.  
-This script reads your transaction history, summarizes daily income and expenses, calculates net cashflow, and highlights the days with the highest income and spending.
+## Fitur
 
-**Features:**
-- Read BRImo bank CSV exports
-- Summarize daily cashflow
-- Show total income, expenses, and net cashflow
-- Highlight the days with the largest income and spending
-- Clean Python code, easy for beginners
+- **Upload CSV** — import langsung file mutasi rekening dari BRI
+- **Bar Chart Cashflow** — visualisasi arus kas harian (pemasukan vs pengeluaran)
+- **Summary Metrics** — ringkasan total pemasukan, pengeluaran, dan selisih bulan ini
+- **Savings Rate** — persentase tabungan dari total pemasukan
 
-**How to Use:**
-1. Make sure Python, `pandas`, `matplotlib` are installed
-2. Place the `.py` script in the same folder as the dummy CSV
-3. Run the script:
-   ```bash
-   python script_name.py
-   ```
-4. Summary output will appear in the terminal
+## Cara Menjalankan
 
-**Note:**  
-Do not upload real banking CSVs to public repositories. Use a dummy CSV with the same column structure for demo purposes.
+### 1. Clone repository
 
+```bash
+git clone https://github.com/username/financial-tracker.git
+cd financial-tracker
+```
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Jalankan aplikasi
+
+```bash
+streamlit run dashboard.py
+```
+
+Aplikasi akan terbuka otomatis di browser pada `http://localhost:8501`
+
+---
+
+## Format CSV
+
+File CSV yang didukung adalah **ekspor mutasi rekening BRI** melalui BRImo atau Internet Banking BRI.
+
+Pastikan file CSV memiliki kolom berikut:
+
+| Kolom | Keterangan |
+|---|---|
+| `TGL_TRAN` | Tanggal transaksi |
+| `REMARK_CUSTOM` | Keterangan / deskripsi transaksi |
+| `MUTASI_KREDIT` | Nominal uang masuk |
+| `MUTASI_DEBET` | Nominal uang keluar |
+
+### Cara ekspor dari BRImo:
+1. Buka aplikasi BRImo
+2. Pilih **Rekening** → **Mutasi Rekening**
+3. Tentukan rentang tanggal
+4. Pilih **Unduh** → format **CSV**
+
+---
+
+## 🛠️ Tech Stack
+
+- [Python 3.x](https://www.python.org/)
+- [Streamlit](https://streamlit.io/) — framework dashboard
+- [Pandas](https://pandas.pydata.org/) — pengolahan data
+
+---
+
+## Requirements
+
+```
+streamlit
+pandas
+```
+
+Install sekaligus:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Roadmap
+
+Kategorisasi pengeluaran otomatis (makan, transportasi, belanja, dll)
+Pie chart pengeluaran per kategori
+Filter berdasarkan rentang tanggal
+Export laporan ke PDF
+Deploy ke Streamlit Cloud
+
+---
+
+## Author
+
+Dibuat oleh **[Fasha Fadlika]** — feel free to fork dan kembangkan sendiri.
