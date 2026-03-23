@@ -2,11 +2,11 @@ import pandas as pd
 import json
 from decimal import Decimal
 
-#baca csv (masukan file csv)
+#read csv (input csv file)
 def load_data(file_path):
     data = pd.read_csv(file_path)
 
-    #konversi tipe data
+    #convert data types
     data["MUTASI_DEBET"] = pd.to_numeric(data["MUTASI_DEBET"], errors="coerce")
     data["MUTASI_KREDIT"] = pd.to_numeric(data["MUTASI_KREDIT"], errors="coerce")
     data["TGL_TRAN"] = pd.to_datetime(data["TGL_TRAN"]).dt.normalize()
@@ -18,57 +18,55 @@ def load_rules(file_path):
         rules = json.load(file)
     return rules
 
-def kategori_pengeluaran(deskripsi, rules):
-    deskripsi = str(deskripsi).upper()
+def get_expense_category(description, rules):
+    description = str(description).upper()
 
-    for kategori, keywords in rules.items():
+    for category, keywords in rules.items():
         for keyword in keywords:
-            if keyword in deskripsi:
-                return kategori
+            if keyword in description:
+                return category
             
-    return "Lainnya"
+    return "Others"
 
-def proses_data(data, rules):
-    data["KATEGORI"] = data["REMARK_CUSTOM"].apply(
-        lambda x: kategori_pengeluaran(x, rules)
+def process_data(data, rules):
+    data["CATEGORY"] = data["REMARK_CUSTOM"].apply(
+        lambda x: get_expense_category(x, rules)
     )
     return data
 
-def hitung_cashflow_perhari(data):
-    #grouping tanggal, kredit, debet
-    data_perhari = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
-    data_perhari["CASHFLOW"] = (data_perhari["MUTASI_KREDIT"] - data_perhari["MUTASI_DEBET"])
-    data_perhari = data_perhari.reset_index()
+def calculate_daily_cashflow(data):
+    #grouping by date, credit, debit
+    daily_data = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
+    daily_data["CASHFLOW"] = (daily_data["MUTASI_KREDIT"] - daily_data["MUTASI_DEBET"])
+    daily_data = daily_data.reset_index()
 
-    return data_perhari
+    return daily_data
 
-def pengeluaran_pemasukan(data_perhari):
-    pemasukan = data_perhari["MUTASI_KREDIT"]
-    pengeluaran = data_perhari["MUTASI_DEBET"]
+def get_income_expenses(daily_data):
+    income = daily_data["MUTASI_KREDIT"]
+    expenses = daily_data["MUTASI_DEBET"]
 
-    return pemasukan, pengeluaran
+    return income, expenses
 
-def hitung_ringkasan(data):
-    total_masuk = int(data["MUTASI_KREDIT"].sum())
-    total_keluar = int(data["MUTASI_DEBET"].sum())
-    selisih = total_masuk - total_keluar
+def calculate_summary(data):
+    total_income = int(data["MUTASI_KREDIT"].sum())
+    total_expenses = int(data["MUTASI_DEBET"].sum())
+    difference = total_income - total_expenses
 
-    return total_masuk, total_keluar, selisih
+    return total_income, total_expenses, difference
 
-def hitung_savings_rate(total_masuk, total_keluar):
+def calculate_savings_rate(total_income, total_expenses):
 
-    if total_masuk <= 0:
-        raise ValueError("Total pemasukan harus lebih dari 0")
-    elif total_keluar < 0:
-        raise ValueError("Total pengeluaran negatif")
-    elif total_keluar > total_masuk:
-        raise ValueError("Total pengeluaran lebih besar dari total pemasukan")
+    if total_income <= 0:
+        raise ValueError("Total income must be greater than 0")
+    elif total_expenses < 0:
+        raise ValueError("Total expenses is negative")
+    elif total_expenses > total_income:
+        raise ValueError("Total expenses exceed total income")
     
-    pemasukan = Decimal(str(total_masuk))
-    pengeluaran = Decimal(str(total_keluar))
+    income = Decimal(str(total_income))
+    expenses = Decimal(str(total_expenses))
 
-    savings_rate = (pemasukan - pengeluaran) / pemasukan
+    savings_rate = (income - expenses) / income
 
     return savings_rate
-
-
