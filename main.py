@@ -9,7 +9,7 @@ def load_data(file_path):
     #konversi tipe data
     data["MUTASI_DEBET"] = pd.to_numeric(data["MUTASI_DEBET"], errors="coerce")
     data["MUTASI_KREDIT"] = pd.to_numeric(data["MUTASI_KREDIT"], errors="coerce")
-    data["TGL_TRAN"] = pd.to_datetime(data["TGL_TRAN"])
+    data["TGL_TRAN"] = pd.to_datetime(data["TGL_TRAN"]).dt.normalize()
 
     return data
 
@@ -38,8 +38,15 @@ def hitung_cashflow_perhari(data):
     #grouping tanggal, kredit, debet
     data_perhari = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
     data_perhari["CASHFLOW"] = (data_perhari["MUTASI_KREDIT"] - data_perhari["MUTASI_DEBET"])
+    data_perhari = data_perhari.reset_index()
 
     return data_perhari
+
+def pengeluaran_pemasukan(data_perhari):
+    pemasukan = data_perhari["MUTASI_KREDIT"]
+    pengeluaran = data_perhari["MUTASI_DEBET"]
+
+    return pemasukan, pengeluaran
 
 def hitung_ringkasan(data):
     total_masuk = int(data["MUTASI_KREDIT"].sum())
@@ -65,9 +72,10 @@ def hitung_savings_rate(total_masuk, total_keluar):
     return savings_rate
 
 def main():
-
+    pass
 # Main Program
-    if __name__ == "__main__":
-        main()
+
+if __name__ == "__main__":
+    main()
 
 
