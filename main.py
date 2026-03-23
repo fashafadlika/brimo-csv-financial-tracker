@@ -71,11 +71,4 @@ def hitung_savings_rate(total_masuk, total_keluar):
 
     return savings_rate
 
-def main():
-    pass
-# Main Program
-
-if __name__ == "__main__":
-    main()
-
 
