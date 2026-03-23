@@ -82,11 +82,11 @@ pip install -r requirements.txt
 
 ## Roadmap
 
-Kategorisasi pengeluaran otomatis (makan, transportasi, belanja, dll)
-Pie chart pengeluaran per kategori
-Filter berdasarkan rentang tanggal
-Export laporan ke PDF
-Deploy ke Streamlit Cloud
+- Kategorisasi pengeluaran otomatis (makan, transportasi, belanja, dll)
+- Pie chart pengeluaran per kategori
+- Filter berdasarkan rentang tanggal
+- Export laporan ke PDF
+- Deploy ke Streamlit Cloud
 
 ---
 
