@@ -16,7 +16,7 @@ Aplikasi dashboard sederhana untuk melacak arus kas keuangan pribadi berdasarkan
 ### 1. Clone repository
 
 ```bash
-git clone https://github.com/username/financial-tracker.git
+git clone https://github.com/fashafadlika/financial-tracker.git
 cd financial-tracker
 ```
 
@@ -92,4 +92,4 @@ Deploy ke Streamlit Cloud
 
 ## Author
 
-Dibuat oleh **[Fasha Fadlika]** — feel free to fork dan kembangkan sendiri.
+Dibuat oleh **Fasha Fadlika** — feel free to fork dan kembangkan sendiri.
