@@ -1,19 +1,19 @@
 # Financial Tracker
 
-Aplikasi dashboard sederhana untuk melacak arus kas keuangan pribadi berdasarkan mutasi rekening BRI. Dibangun menggunakan Python dan Streamlit.
+A simple dashboard application to track personal cash flow based on BRI bank statement mutations. Built using Python and Streamlit.
 
 ---
 
-## Fitur
+## Features
 
-- **Upload CSV** — import langsung file mutasi rekening dari BRI
-- **Bar Chart Cashflow** — visualisasi arus kas harian (pemasukan vs pengeluaran)
-- **Summary Metrics** — ringkasan total pemasukan, pengeluaran, dan selisih bulan ini
-- **Savings Rate** — persentase tabungan dari total pemasukan
+- **Upload CSV** — directly import BRI bank statement mutation files
+- **Bar Chart Cashflow** — daily cash flow visualization (income vs expenses)
+- **Summary Metrics** — summary of total income, expenses, and this month's balance
+- **Savings Rate** — savings percentage from total income
 
-## Cara Menjalankan
+## How to Run
 
-### 1. Clone repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/fashafadlika/financial-tracker.git
@@ -26,42 +26,42 @@ cd financial-tracker
 pip install -r requirements.txt
 ```
 
-### 3. Jalankan aplikasi
+### 3. Run the application
 
 ```bash
 streamlit run dashboard.py
 ```
 
-Aplikasi akan terbuka otomatis di browser pada `http://localhost:8501`
+The application will open automatically in your browser at `http://localhost:8501`
 
 ---
 
-## Format CSV
+## CSV Format
 
-File CSV yang didukung adalah **ekspor mutasi rekening BRI** melalui BRImo atau Internet Banking BRI.
+The supported CSV file is the **BRI bank statement export** via BRImo or BRI Internet Banking.
 
-Pastikan file CSV memiliki kolom berikut:
+Make sure the CSV file contains the following columns:
 
-| Kolom | Keterangan |
+| Column | Description |
 |---|---|
-| `TGL_TRAN` | Tanggal transaksi |
-| `REMARK_CUSTOM` | Keterangan / deskripsi transaksi |
-| `MUTASI_KREDIT` | Nominal uang masuk |
-| `MUTASI_DEBET` | Nominal uang keluar |
+| `TGL_TRAN` | Transaction date |
+| `REMARK_CUSTOM` | Transaction description / notes |
+| `MUTASI_KREDIT` | Incoming amount |
+| `MUTASI_DEBET` | Outgoing amount |
 
-### Cara ekspor dari BRImo:
-1. Buka aplikasi BRImo
-2. Pilih **Rekening** → **Mutasi Rekening**
-3. Tentukan rentang tanggal
-4. Pilih **Unduh** → format **CSV**
+### How to export from BRImo:
+1. Open the BRImo app
+2. Select **Account** → **Account Mutations**
+3. Set the date range
+4. Select **Download** → **CSV** format
 
 ---
 
 ## 🛠️ Tech Stack
 
 - [Python 3.x](https://www.python.org/)
-- [Streamlit](https://streamlit.io/) — framework dashboard
-- [Pandas](https://pandas.pydata.org/) — pengolahan data
+- [Streamlit](https://streamlit.io/) — dashboard framework
+- [Pandas](https://pandas.pydata.org/) — data processing
 
 ---
 
@@ -72,7 +72,7 @@ streamlit
 pandas
 ```
 
-Install sekaligus:
+Install all at once:
 
 ```bash
 pip install -r requirements.txt
@@ -82,14 +82,14 @@ pip install -r requirements.txt
 
 ## Roadmap
 
-- Kategorisasi pengeluaran otomatis (makan, transportasi, belanja, dll)
-- Pie chart pengeluaran per kategori
-- Filter berdasarkan rentang tanggal
-- Export laporan ke PDF
-- Deploy ke Streamlit Cloud
+- Automatic expense categorization (food, transportation, shopping, etc.)
+- Pie chart of expenses per category
+- Filter by date range
+- Export reports to PDF
+- Deploy to Streamlit Cloud
 
 ---
 
 ## Author
 
-Dibuat oleh **Fasha Fadlika** — feel free to fork dan kembangkan sendiri.
+Created by **Fasha Fadlika** — feel free to fork and develop it yourself.
