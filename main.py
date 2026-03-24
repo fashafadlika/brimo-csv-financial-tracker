@@ -42,12 +42,6 @@ def calculate_daily_cashflow(data):
 
     return daily_data
 
-def get_income_expenses(daily_data):
-    income = daily_data["MUTASI_KREDIT"]
-    expenses = daily_data["MUTASI_DEBET"]
-
-    return income, expenses
-
 def calculate_summary(data):
     total_income = int(data["MUTASI_KREDIT"].sum())
     total_expenses = int(data["MUTASI_DEBET"].sum())
