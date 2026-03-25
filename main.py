@@ -13,27 +13,6 @@ def load_data(file_path):
 
     return data
 
-def load_rules(file_path):
-    with open(file_path, "r") as file:
-        rules = json.load(file)
-    return rules
-
-def get_expense_category(description, rules):
-    description = str(description).upper()
-
-    for category, keywords in rules.items():
-        for keyword in keywords:
-            if keyword in description:
-                return category
-            
-    return "Others"
-
-def process_data(data, rules):
-    data["CATEGORY"] = data["REMARK_CUSTOM"].apply(
-        lambda x: get_expense_category(x, rules)
-    )
-    return data
-
 def calculate_daily_cashflow(data):
     #grouping by date, credit, debit
     daily_data = data.groupby("TGL_TRAN")[["MUTASI_KREDIT", "MUTASI_DEBET"]].sum()
