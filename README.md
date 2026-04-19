@@ -81,9 +81,6 @@ pip install -r requirements.txt
 ---
 
 ## Roadmap
-
-- Automatic expense categorization (food, transportation, shopping, etc.)
-- Pie chart of expenses per category
 - Filter by date range
 - Export reports to PDF
 - Deploy to Streamlit Cloud
