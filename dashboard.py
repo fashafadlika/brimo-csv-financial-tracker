@@ -1,4 +1,5 @@
 import streamlit as st
+import plotly.express as px
 import main as bri
 from styles import load_css
 
@@ -102,6 +103,24 @@ if file is not None:
 
     st.divider()
 
+    #Pie Chart for Categorization
+    data_pie = bri.categorize_transactions(data, bri.load_rules("rules.json"))
+    
+    category_counts = data["CATEGORY"].value_counts().reset_index()
+    category_counts.columns = ["CATEGORY", "count"]
+
+    st.write(category_counts)
+
+    fig = px.pie(
+        category_counts,
+        names="CATEGORY",
+        values="count",
+        title="Expenditure Category"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    
     #Daily transaction table
     with st.expander("View transaction details per day"):
         st.dataframe(
@@ -134,5 +153,5 @@ else:
         <p style="font-family:'DM Mono',monospace; font-size:0.8rem; color:#6b6b72; letter-spacing:1px;">
             Supported format: CSV export from BRI bank application
         </p>
-    </div>
+    </div> 
     """, unsafe_allow_html=True)

@@ -43,3 +43,19 @@ def calculate_savings_rate(total_income, total_expenses):
     savings_rate = (income - expenses) / income
 
     return savings_rate
+
+#Read rules.json
+def load_rules(rules_path):
+    with open(rules_path, "r") as f:
+        rules = json.load(f)
+    return rules
+
+#Categorization
+def categorize_transactions(data, rules):
+    def get_category(description):
+        for category, keywords in rules.items():
+            if any(keyword in description for keyword in keywords):
+                return category
+        return "Uncategorized"
+    data["CATEGORY"] = data["REMARK_CUSTOM"].apply(get_category)
+    return data
